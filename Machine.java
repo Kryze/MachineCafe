@@ -106,11 +106,11 @@ public class Machine implements Serializable {
 								sc.next();
 							}
 							int dose = sc.nextInt();
-							if(Boisson.verifierStock(vendu.getIngredients().get(0).getUnite(),vendu.getIngredients().get(1).getUnite(),vendu.getIngredients().get(2).getUnite(),vendu.getIngredients().get(3).getUnite()+dose)){
+							if(Boisson.verifierStock(vendu.getIngredients().get(0).getUnite(),vendu.getIngredients().get(1).getUnite(),vendu.getIngredients().get(2).getUnite(),vendu.getIngredients().get(3).getUnite()+dose) && dose+vendu.getIngredients().get(3).getUnite()>=0){
 								Cafe.setStockCafe(Cafe.getStockCafe()-vendu.getIngredients().get(0).getUnite());
 								Lait.setStockLait(Lait.getStockLait()-vendu.getIngredients().get(1).getUnite());
 								Chocolat.setStockChocolat(Chocolat.getStockChocolat()-vendu.getIngredients().get(2).getUnite());
-								Sucre.setStockSucre(Sucre.getStockSucre()-vendu.getIngredients().get(3).getUnite());
+								Sucre.setStockSucre(Sucre.getStockSucre()-vendu.getIngredients().get(3).getUnite()+dose);
 								monnaie=monnaie-vendu.getPrix();
 								System.out.println("Boisson délivré");
 								System.out.println("Rendu de la monnaie : "+monnaie+"€");
@@ -139,6 +139,7 @@ public class Machine implements Serializable {
 				if(m.slotBoisson<NOMBREBOISSONS){
 					System.out.println("Veuillez nommer la boisson que vous souhaitez ajouter");
 					String nomBoisson=sc.next();
+					if(m.verifierNom(nomBoisson,m)){
 					System.out.println("Veuillez indiquez le prix de votre boisson");
 					while(!sc.hasNextInt()){
 						
@@ -150,6 +151,10 @@ public class Machine implements Serializable {
 					// On ajoute 1 à la liste des boissons
 					m.slotBoisson+=1;
 					System.out.println("Boisson correctement ajoutée");
+				}
+					else{
+						System.out.println("Le nom choisi n'est pas unique, retour au menu");
+				}
 				}
 				break;
 			case "3":
@@ -280,6 +285,7 @@ public class Machine implements Serializable {
 				break;
 			}
 		}
+
 	}
 
 	public static <Boisson> int getLength(Boisson[] arr){
@@ -304,6 +310,16 @@ public class Machine implements Serializable {
 
 	public void setBoissons(Boisson b, int indice) {
 		this.boissons[indice] = b;
+	}
+	
+	public boolean verifierNom(String nom,Machine m){
+		boolean unique = true;
+		for(Boisson b : m.getBoissons()){
+			if(b!=null && b.getNomBoisson().equals(nom)){
+				unique = false;
+			}
+		}
+		return unique;
 	}
 	
 	public static Machine chargeMachine() throws ClassNotFoundException, IOException{
