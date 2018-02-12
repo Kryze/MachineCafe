@@ -88,7 +88,7 @@ public class Boisson implements Comparable<Boisson>,Serializable {
 			Sucre s = new Sucre(uSucre);
 		
 			// Creation de la liste des ingrédients
-			ArrayList<Ingredient> i = new ArrayList();
+			ArrayList<Ingredient> i = new ArrayList<Ingredient>();
 			// Ajout de chaque ingrédients
 			i.add(c);
 			i.add(l);

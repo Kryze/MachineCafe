@@ -137,7 +137,6 @@ public class Machine implements Serializable {
 			case "2":
 				// Si il reste une place de libre pour ajouter une boisson
 				if(m.slotBoisson<NOMBREBOISSONS){
-					boolean nomunique=true;
 					System.out.println("Veuillez nommer la boisson que vous souhaitez ajouter");
 					String nomBoisson=sc.next();
 					System.out.println("Veuillez indiquez le prix de votre boisson");
